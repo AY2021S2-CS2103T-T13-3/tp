@@ -67,13 +67,13 @@ public class ModelManager implements Model {
 
     @Override
     public Path getFlashBackFilePath() {
-        return userPrefs.getAddressBookFilePath();
+        return userPrefs.getFlashBackFilePath();
     }
 
     @Override
     public void setFlashBackFilePath(Path addressBookFilePath) {
         requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
+        userPrefs.setFlashBackFilePath(addressBookFilePath);
     }
 
     //=========== AddressBook ================================================================================

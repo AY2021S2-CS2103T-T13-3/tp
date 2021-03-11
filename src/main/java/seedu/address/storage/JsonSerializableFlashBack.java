@@ -16,28 +16,28 @@ import seedu.address.model.flashcard.Flashcard;
 /**
  * An Immutable AddressBook that is serializable to JSON format.
  */
-@JsonRootName(value = "addressbook")
-class JsonSerializableAddressBook {
+@JsonRootName(value = "flashback")
+class JsonSerializableFlashBack {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
 
-    private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedFlashcard> flashcards = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableAddressBook} with the given persons.
+     * Constructs a {@code JsonSerializableFlashBack} with the given flashcards.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
-        this.persons.addAll(persons);
+    public JsonSerializableFlashBack(@JsonProperty("flashcards") List<JsonAdaptedFlashcard> flashcards) {
+        this.flashcards.addAll(flashcards);
     }
 
     /**
      * Converts a given {@code ReadOnlyAddressBook} into this class for Jackson use.
      *
-     * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
+     * @param source future changes to this will not affect the created {@code JsonSerializableFlashBack}.
      */
-    public JsonSerializableAddressBook(ReadOnlyFlashBack source) {
-        persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+    public JsonSerializableFlashBack(ReadOnlyFlashBack source) {
+        flashcards.addAll(source.getPersonList().stream().map(JsonAdaptedFlashcard::new).collect(Collectors.toList()));
     }
 
     /**
@@ -47,8 +47,8 @@ class JsonSerializableAddressBook {
      */
     public FlashBack toModelType() throws IllegalValueException {
         FlashBack flashBack = new FlashBack();
-        for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
-            Flashcard flashcard = jsonAdaptedPerson.toModelType();
+        for (JsonAdaptedFlashcard jsonAdaptedFlashcard : flashcards) {
+            Flashcard flashcard = jsonAdaptedFlashcard.toModelType();
             if (flashBack.hasPerson(flashcard)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }

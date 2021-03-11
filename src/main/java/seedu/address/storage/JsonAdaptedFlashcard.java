@@ -16,28 +16,28 @@ import seedu.address.model.tag.Tag;
 /**
  * Jackson-friendly version of {@link Flashcard}.
  */
-class JsonAdaptedPerson {
+class JsonAdaptedFlashcard {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Flashcard's %s field is missing!";
 
-    private final String name;
-    private final String phone;
-    private final String email;
-    private final String address;
+    private final String question;
+    private final String answer;
+    private final String category;
+    private final String priority;
     private final String remark;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     * Constructs a {@code JsonAdaptedFlashcard} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("remark") String remark, @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
+    public JsonAdaptedFlashcard(@JsonProperty("question") String name, @JsonProperty("answer") String phone,
+                                @JsonProperty("category") String email, @JsonProperty("priority") String address,
+                                @JsonProperty("remark") String remark, @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+        this.question = name;
+        this.answer = phone;
+        this.category = email;
+        this.priority = address;
         this.remark = remark;
         if (tagged != null) {
             this.tagged.addAll(tagged);
@@ -47,11 +47,11 @@ class JsonAdaptedPerson {
     /**
      * Converts a given {@code Person} into this class for Jackson use.
      */
-    public JsonAdaptedPerson(Flashcard source) {
-        name = source.getName().fullQuestion;
-        phone = source.getPhone().value;
-        email = source.getEmail().value;
-        address = source.getAddress().value;
+    public JsonAdaptedFlashcard(Flashcard source) {
+        question = source.getName().fullQuestion;
+        answer = source.getPhone().value;
+        category = source.getEmail().value;
+        priority = source.getAddress().value;
         remark = source.getRemark().value;
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
@@ -69,40 +69,40 @@ class JsonAdaptedPerson {
             personTags.add(tag.toModelType());
         }
 
-        if (name == null) {
+        if (question == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Question.class.getSimpleName()));
         }
-        if (!Question.isValidQuestion(name)) {
+        if (!Question.isValidQuestion(question)) {
             throw new IllegalValueException(Question.MESSAGE_CONSTRAINTS);
         }
-        final Question modelQuestion = new Question(name);
+        final Question modelQuestion = new Question(question);
 
-        if (phone == null) {
+        if (answer == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Answer.class.getSimpleName()));
         }
-        if (!Answer.isValidAnswer(phone)) {
+        if (!Answer.isValidAnswer(answer)) {
             throw new IllegalValueException(Answer.MESSAGE_CONSTRAINTS);
         }
-        final Answer modelAnswer = new Answer(phone);
+        final Answer modelAnswer = new Answer(answer);
 
-        if (email == null) {
+        if (category == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Category.class.getSimpleName()));
         }
-        if (!Category.isValidCategory(email)) {
+        if (!Category.isValidCategory(category)) {
             throw new IllegalValueException(Category.MESSAGE_CONSTRAINTS);
         }
-        final Category modelCategory = new Category(email);
+        final Category modelCategory = new Category(category);
 
-        if (address == null) {
+        if (priority == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Priority.class.getSimpleName()));
         }
-        if (!Priority.isValidPriority(address)) {
+        if (!Priority.isValidPriority(priority)) {
             throw new IllegalValueException(Priority.MESSAGE_CONSTRAINTS);
         }
-        final Priority modelPriority = new Priority(address);
+        final Priority modelPriority = new Priority(priority);
 
         if (remark == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));

@@ -180,7 +180,7 @@ Recall from the User Guide that the `edit` command has the format: `edit INDEX [
     * {@code JsonSerializableAddressBook}.
     */
    public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-       persons.addAll(
+       flashcards.addAll(
            source.getPersonList()
                  .stream()
                  .map(JsonAdaptedPerson::new)
